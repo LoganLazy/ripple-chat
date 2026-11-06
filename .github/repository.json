@@ -1,0 +1,18 @@
+{
+  "owner": "LoganLazy",
+  "name": "ripple-chat",
+  "description": "涟漪 Ripple：基于 Matrix、React、TypeScript 与 Electron 的聊天客户端原型，支持附件、主题及响应式界面。",
+  "homepage": "",
+  "private": false,
+  "has_issues": true,
+  "has_wiki": false,
+  "topics": [
+    "matrix",
+    "chat",
+    "messenger",
+    "electron",
+    "react",
+    "typescript",
+    "end-to-end-encryption"
+  ]
+}
