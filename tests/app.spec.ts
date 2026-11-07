@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { docScreenshotPath } from "./screenshot-path";
 
 test("演示消息、回复、搜索、持久化和独立草稿", async ({ page }) => {
   const errors: string[] = [];
@@ -12,7 +13,10 @@ test("演示消息、回复、搜索、持久化和独立草稿", async ({ page 
     el.style.scrollBehavior = "auto";
     el.scrollTop = 0;
   });
-  await page.screenshot({ path: "docs/ripple-light.png", fullPage: true });
+  await page.screenshot({
+    path: docScreenshotPath("ripple-light.png"),
+    fullPage: true,
+  });
   await page.getByRole("textbox", { name: "输入消息" }).fill("你好，涟漪！");
   await page.getByRole("button", { name: "发送消息", exact: true }).click();
   await expect(
@@ -77,7 +81,10 @@ test("创建房间、表情、空消息、未读过滤与主题", async ({ page 
   await page.evaluate(() => document.fonts.ready);
   if (await page.getByRole("button", { name: "关闭提示" }).isVisible())
     await page.getByRole("button", { name: "关闭提示" }).click();
-  await page.screenshot({ path: "docs/ripple-dark.png", fullPage: true });
+  await page.screenshot({
+    path: docScreenshotPath("ripple-dark.png"),
+    fullPage: true,
+  });
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
 });
@@ -99,7 +106,10 @@ test("手机布局可切换会话、发送与返回，无横向溢出", async ({
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.screenshot({ path: "docs/ripple-mobile.png", fullPage: true });
+  await page.screenshot({
+    path: docScreenshotPath("ripple-mobile.png"),
+    fullPage: true,
+  });
   await page.getByRole("button", { name: "返回会话" }).click();
   await expect(page.locator(".sidebar")).toBeVisible();
 });

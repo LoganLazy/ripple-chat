@@ -1,4 +1,6 @@
 import { defineConfig } from "@playwright/test";
+import { withExtraLibraryPaths } from "./tests/launch-env";
+
 export default defineConfig({
   testDir: "./tests",
   timeout: 45000,
@@ -19,12 +21,9 @@ export default defineConfig({
           executablePath: process.env.RIPPLE_CHROME,
           env: {
             ...process.env,
-            LD_LIBRARY_PATH: [
-              process.env.LD_LIBRARY_PATH,
-              "/home/lazyease/nebula-memory/guilibs/root/usr/lib/x86_64-linux-gnu",
-            ]
-              .filter(Boolean)
-              .join(":"),
+            // Only library paths that exist on this machine are added;
+            // override with RIPPLE_GUILIBS (see tests/launch-env.ts).
+            LD_LIBRARY_PATH: withExtraLibraryPaths(process.env.LD_LIBRARY_PATH),
           },
         }
       : {},
