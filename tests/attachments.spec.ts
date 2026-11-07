@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { docScreenshotPath } from "./screenshot-path";
 import { createCipheriv, createDecipheriv, createHash } from "node:crypto";
 import {
   encryptAttachment,
@@ -161,7 +162,10 @@ test("普通文件、取消选择、大小限制与文字编辑", async ({ page 
   await expect(updated).toHaveCount(1);
   await expect(updated).toBeInViewport();
   await page.evaluate(() => document.fonts.ready);
-  await page.screenshot({ path: "docs/ripple-v02.png", fullPage: true });
+  await page.screenshot({
+    path: docScreenshotPath("ripple-v02.png"),
+    fullPage: true,
+  });
 });
 
 test("加密房间上传密文、消息携带密钥，取消后不发送", async () => {

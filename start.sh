@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 cd -- "$(dirname -- "${BASH_SOURCE[0]}")"
-if ! command -v node >/dev/null 2>&1; then
-  for ripple_node_dir in "$HOME/.config/nvm/versions/node/v22.23.2/bin" /tmp/node-v22.14.0-linux-x64/bin; do
-    if [[ -x "$ripple_node_dir/node" ]]; then export PATH="$ripple_node_dir:$PATH"; break; fi
-  done
+# Optional override for the Node.js directory, e.g. RIPPLE_NODE_BIN="$HOME/.nvm/versions/node/v22.23.2/bin".
+if [[ -n "${RIPPLE_NODE_BIN:-}" && -x "$RIPPLE_NODE_BIN/node" ]]; then
+  export PATH="$RIPPLE_NODE_BIN:$PATH"
 fi
 if ! command -v node >/dev/null 2>&1; then
   echo '请先安装 Node.js 22.12 或更高版本。'; exit 1

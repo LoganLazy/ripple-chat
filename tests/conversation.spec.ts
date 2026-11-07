@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { docScreenshotPath } from "./screenshot-path";
 import { mockMatrix, connectMatrix } from "./matrix-fixture";
 
 test("输入状态来自真实同步，过滤自己，停止后消失且不产生聊天消息", async ({
@@ -127,13 +128,11 @@ test("本地附件保存期间取消会中止事务，保留附件供重新发�
     };
   });
   await page.goto("/");
-  await page
-    .getByLabel("添加附件")
-    .setInputFiles({
-      name: "cancel.txt",
-      mimeType: "text/plain",
-      buffer: Buffer.from("cancel me"),
-    });
+  await page.getByLabel("添加附件").setInputFiles({
+    name: "cancel.txt",
+    mimeType: "text/plain",
+    buffer: Buffer.from("cancel me"),
+  });
   await page.getByRole("button", { name: "发送消息", exact: true }).click();
   await expect
     .poll(() => page.evaluate(() => (window as any).savingAttachment))
@@ -199,7 +198,7 @@ test("手机深色模式下输入状态与新消息入口不溢出且可以返�
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
-  await page.screenshot({ path: "docs/ripple-v03-mobile.png" });
+  await page.screenshot({ path: docScreenshotPath("ripple-v03-mobile.png") });
   await page.locator(".jump-latest").click();
   await expect(page.locator(".jump-latest")).toHaveCount(0);
 });
